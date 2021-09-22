@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HelmiController!{% endblock %}
+
+{% block body %}
+<style>
+.articles{
+    border-radius:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+    padding:16px 20px;
+
+}
+img{
+   border-radius:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);  
+}
+</style>
+<section class="articles">
+{% for article in articles %}
+<article>
+<h2>{{ article.title }}</h2>
+<div class="metadata">ecrit le {{ article.createdAt | date('d/m/y')}} à {{ article.createdAt | date('H:i') }} dans la catégorie{{ article.category.title }}</div>
+<div class="content">
+<img src="{{ article.image }}" alt="">
+{{ article.content | raw }}
+<a href="{{ path('helmi_show' , {'id': article.id})  }}" class="btn btn-primary"> lire la suite</a>
+</div>
+</article>
+{% endfor %}
+
+</section>
+<div class="navigation">
+    {{ knp_pagination_render(articles) }} 
+</div>
+
+{% endblock %}

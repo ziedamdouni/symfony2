@@ -1,0 +1,63 @@
+{%  extends 'base.html.twig'  %}
+{% form_theme commentform 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<style>
+.articles{
+    border-radius:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+    padding:16px 20px;
+
+}
+img{
+   border-radius:10px;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);  
+}
+</style>
+<article>
+<h2>{{ article.title}}</h2>
+<div class="metadata">ecrit le {{ article.createdAt | date('d/m/y')}} à {{ article.createdAt | date('H:i') }} dans le catégorie{{ article.category.title}}</div>
+<div class="content">
+<img src="{{ article.image }}" alt="">
+{{ article.content | raw }}
+
+</div>
+</article>
+</section>
+<a href="{{ path('helmi_edit' , {'id': article.id})  }}" class="btn btn-success">modifier</a>
+<section id="comments">
+<h1>{{ article.comments | length }} commentaires : </h1>
+{% for comment in article.comments %}
+<div class="comment">
+<div class="row">
+<div class="col-3" style="color:red;">
+(<small>
+{{comment.createdAt | date('d-m-y') }}à l'heure {{comment.createdAt | date('H:i') }}
+</small>){{comment.auteur}}
+
+
+</div>
+<div class="col-9">
+              {{comment.content | raw}}
+           </div>
+           </div>
+           </div>
+{% endfor %}
+{%  if app.user %}
+
+
+{{ form_start(commentform)}}
+{{ form_row(commentform.auteur,{'attr':{'placeholder':"votre nom...."}}) }}
+{{ form_row(commentform.content,{'attr':{'placeholder':"votre commentaire....."}}) }}
+
+
+<button class="btn btn-success">commenter!</button>
+{{ form_end(commentform) }}
+</section>
+{% else %}
+<h2> vous ne pouvez pas commenter c'est vous n'etes pas connecté!!!</h2>
+<a href="{{path('security_login')}}" class="btn btn-primary">connexion</a>
+{% endif %}
+
+{%  endblock %}
+
+

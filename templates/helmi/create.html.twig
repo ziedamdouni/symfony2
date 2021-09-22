@@ -1,0 +1,12 @@
+{% extends 'base.html.twig'  %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body       %}
+
+<h1>creation d'un article ! </h1>
+
+{{ form_start(form)}}
+{{ form_widget(form)}}
+
+<button class="btn btn-success">envoyer</button>
+{{ form_end(form) }}
+{% endblock             %}
